@@ -30,8 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.annotation.CheckForNull;
-import javax.servlet.AsyncContext;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.AsyncContext;
+import jakarta.servlet.http.HttpServletRequest;
 import org.sonar.api.impl.ws.PartImpl;
 import org.sonar.api.impl.ws.ValidatingRequest;
 import org.sonar.api.utils.log.Loggers;
@@ -112,7 +112,7 @@ public class ServletRequest extends ValidatingRequest {
       if (!isMultipartContent()) {
         return null;
       }
-      javax.servlet.http.Part part = source.getPart(key);
+      jakarta.servlet.http.Part part = source.getPart(key);
       if (part == null || part.getSize() == 0) {
         return null;
       }

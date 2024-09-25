@@ -19,8 +19,8 @@
  */
 package org.sonar.server.authentication;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -20,7 +20,7 @@
 package org.sonar.auth.ldap;
 
 import java.io.File;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;

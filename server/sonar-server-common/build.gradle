@@ -41,7 +41,7 @@ dependencies {
   testImplementation testFixtures(project(':server:sonar-db-dao'))
   testImplementation project(':sonar-plugin-api-impl')
   testImplementation project(':sonar-testing-harness')
-    
+
   testFixturesApi 'junit:junit'
   testFixturesApi testFixtures(project(':server:sonar-db-dao'))
 

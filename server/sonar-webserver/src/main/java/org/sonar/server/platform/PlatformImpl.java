@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 import javax.annotation.Nullable;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.api.utils.log.Profiler;

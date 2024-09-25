@@ -20,7 +20,7 @@
 package org.sonar.server.app;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ErrorReportValve;
@@ -33,7 +33,7 @@ public class SecureErrorReportValve extends ErrorReportValve {
 
   @Override
   public void invoke(Request request, Response response) throws IOException, ServletException {
-    SecurityServletFilter.addSecurityHeaders(request, response);
+    SecurityServletFilter.addSecurityHeaders(request.getRequest(), response.getResponse());
     super.invoke(request, response);
   }
 }

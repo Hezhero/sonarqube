@@ -22,10 +22,10 @@ package org.sonar.server.platform.web;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.sonar.api.web.ServletFilter;
 import org.sonar.server.ws.ServletRequest;
 import org.sonar.server.ws.ServletResponse;
@@ -56,7 +56,7 @@ public class WebServiceReroutingFilter extends ServletFilter {
   }
 
   @Override
-  public void doFilter(javax.servlet.ServletRequest servletRequest, javax.servlet.ServletResponse servletResponse, FilterChain chain) {
+  public void doFilter(jakarta.servlet.ServletRequest servletRequest, jakarta.servlet.ServletResponse servletResponse, FilterChain chain) {
     HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
     RedirectionRequest wsRequest = new RedirectionRequest(httpRequest);
     ServletResponse wsResponse = new ServletResponse((HttpServletResponse) servletResponse);

@@ -19,7 +19,7 @@
  */
 package org.sonar.auth.ldap;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.sonar.api.config.internal.MapSettings;

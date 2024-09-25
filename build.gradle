@@ -33,6 +33,7 @@ boolean enableBom = System.getenv('CI') == "true" && (isMainBranch || isNightlyB
         System.getProperty("bom") != null ||
         gradle.startParameter.taskNames.findAll({ it.matches(".*:($bomTasks)") })
 
+// 定义所有子项目都共享的依赖项
 allprojects {
   apply plugin: 'com.jfrog.artifactory'
   apply plugin: 'maven-publish'
@@ -41,7 +42,7 @@ allprojects {
   ext.buildNumber = System.getProperty("buildNumber")
   // when no buildNumber is provided, then project version must end with '-SNAPSHOT'
   if (ext.buildNumber == null) {
-      version = "${version}-SNAPSHOT".toString()
+      version = "${version}.79811-tomcat11.0.0-M25".toString()
       ext.versionWithoutBuildNumber = version
   } else {
       ext.versionWithoutBuildNumber = version
@@ -62,24 +63,35 @@ allprojects {
   }
 
   repositories {
-    def repository = project.hasProperty('qa') ? 'sonarsource-qa' : 'sonarsource'
+//    //首先去本地仓库找
+    mavenLocal()
+//
+//    //最后从maven中央仓库找
+    mavenCentral()
+
     maven {
-      // The environment variables ARTIFACTORY_PRIVATE_USERNAME and ARTIFACTORY_PRIVATE_PASSWORD are used on QA env (Jenkins)
-      // On local box, please add artifactoryUsername and artifactoryPassword to ~/.gradle/gradle.properties
-      def artifactoryUsername = System.env.'ARTIFACTORY_PRIVATE_USERNAME' ?: (project.hasProperty('artifactoryUsername') ? project.getProperty('artifactoryUsername') : '')
-      def artifactoryPassword = System.env.'ARTIFACTORY_PRIVATE_PASSWORD' ?: (project.hasProperty('artifactoryPassword') ? project.getProperty('artifactoryPassword') : '')
-      if (artifactoryUsername && artifactoryPassword) {
-        credentials {
-          username artifactoryUsername
-          password artifactoryPassword
-        }
-      } else {
-        // Workaround for artifactory
-        // https://www.jfrog.com/jira/browse/RTFACT-13797
-        repository = 'public'
-      }
-      url "https://repox.jfrog.io/repox/${repository}"
+      url "https://repox.jfrog.io/repox/public"
     }
+
+
+//    def repository = project.hasProperty('qa') ? 'sonarsource-qa' : 'sonarsource'
+//    maven {
+//      // The environment variables ARTIFACTORY_PRIVATE_USERNAME and ARTIFACTORY_PRIVATE_PASSWORD are used on QA env (Jenkins)
+//      // On local box, please add artifactoryUsername and artifactoryPassword to ~/.gradle/gradle.properties
+//      def artifactoryUsername = System.env.'ARTIFACTORY_PRIVATE_USERNAME' ?: (project.hasProperty('artifactoryUsername') ? project.getProperty('artifactoryUsername') : '')
+//      def artifactoryPassword = System.env.'ARTIFACTORY_PRIVATE_PASSWORD' ?: (project.hasProperty('artifactoryPassword') ? project.getProperty('artifactoryPassword') : '')
+//      if (artifactoryUsername && artifactoryPassword) {
+//        credentials {
+//          username artifactoryUsername
+//          password artifactoryPassword
+//        }
+//      } else {
+//        // Workaround for artifactory
+//        // https://www.jfrog.com/jira/browse/RTFACT-13797
+//        repository = 'public'
+//      }
+//      url "https://repox.jfrog.io/repox/${repository}"
+//    }
   }
 
   task allDependencies {
@@ -137,6 +149,7 @@ tasks.named('wrapper') {
     distributionType = Wrapper.DistributionType.ALL
 }
 
+// 配置父模块
 subprojects {
   apply plugin: 'com.github.hierynomus.license'
   apply plugin: 'io.spring.dependency-management'
@@ -204,16 +217,24 @@ subprojects {
       dependency 'org.sonarsource.slang:sonar-ruby-plugin:1.11.0.3905'
       dependency 'org.sonarsource.slang:sonar-scala-plugin:1.11.0.3905'
       dependency 'org.sonarsource.api.plugin:sonar-plugin-api:9.14.0.375'
+//      dependency 'org.sonarsource.api.plugin:sonar-plugin-api:10.10.0.2391'
       dependency 'org.sonarsource.xml:sonar-xml-plugin:2.7.0.3820'
       dependency 'org.sonarsource.iac:sonar-iac-plugin:1.11.0.2847'
       dependency 'org.sonarsource.text:sonar-text-plugin:2.0.2.1090'
 
       // please keep this list alphabetically ordered
-      dependencySet(group: 'ch.qos.logback', version: '1.2.10') {
-        entry 'logback-access'
+//      dependencySet(group: 'ch.qos.logback', version: '1.2.10') {
+      dependencySet(group: 'ch.qos.logback', version: '1.3.14') {
+//        entry 'logback-access'
         entry 'logback-classic'
         entry 'logback-core'
       }
+      // ToDo switch to dependency 'ch.qos.logback.access:tomcat:2.0.1' when upgrading to Tomcat10+
+      dependencySet(group: 'ch.qos.logback.access', version: '2.0.1') {
+        entry 'tomcat'
+      }
+//      dependency 'ch.qos.logback.access:tomcat:version:2.0.1'
+
       dependency('commons-beanutils:commons-beanutils:1.9.4') {
         exclude 'commons-logging:commons-logging'
       }
@@ -227,7 +248,8 @@ subprojects {
         entry 'scribejava-apis'
         entry 'scribejava-core'
       }
-      dependency 'com.github.everit-org.json-schema:org.everit.json.schema:1.14.0'
+//      dependency 'com.github.everit-org.json-schema:org.everit.json.schema:1.14.0'
+      dependency 'com.github.erosb:everit-json-schema:1.14.0'
       // This project is no longer maintained and was forked
       // by https://github.com/java-diff-utils/java-diff-utils
       // (io.github.java-diff-utils:java-diff-utils).
@@ -277,7 +299,8 @@ subprojects {
       dependency 'com.sun.mail:javax.mail:1.6.2'
       dependency 'javax.annotation:javax.annotation-api:1.3.2'
       dependency 'javax.inject:javax.inject:1'
-      dependency 'javax.servlet:javax.servlet-api:4.0.1'
+//      dependency 'jakarta.servlet:jakarta.servlet-api:4.0.2'
+      dependency 'jakarta.servlet:jakarta.servlet-api:6.1.0'
       dependency 'javax.xml.bind:jaxb-api:2.3.1'
       dependency 'junit:junit:4.13.2'
       dependency 'org.xmlunit:xmlunit-core:2.9.0'
@@ -297,7 +320,8 @@ subprojects {
         entry 'log4j-api'
         entry 'log4j-to-slf4j'
       }
-      dependencySet(group: 'org.apache.tomcat.embed', version: '9.0.82') {
+      dependencySet(group: 'org.apache.tomcat.embed', version: '11.0.0-M25') {
+//      dependencySet(group: 'org.apache.tomcat.embed', version: '9.0.82') {
         entry 'tomcat-embed-core'
         entry('tomcat-embed-jasper') {
           exclude 'org.eclipse.jdt.core.compiler:ecj'
@@ -321,8 +345,10 @@ subprojects {
       }
       dependency 'org.elasticsearch.plugin:transport-netty4-client:7.17.8'
       dependency 'org.elasticsearch:mocksocket:1.2'
-      dependency 'org.codelibs.elasticsearch.module:analysis-common:7.17.1'
-      dependency 'org.codelibs.elasticsearch.module:reindex:7.17.1'
+//      dependency 'org.codelibs.elasticsearch.module:analysis-common:7.17.1'
+//      dependency 'org.codelibs.elasticsearch.module:reindex:7.17.1'
+      dependency 'org.codelibs.elasticsearch.module:analysis-common:7.10.2'
+      dependency 'org.codelibs.elasticsearch.module:reindex:7.10.2'
       dependency 'org.eclipse.jgit:org.eclipse.jgit:6.4.0.202211300538-r'
       dependency 'org.tmatesoft.svnkit:svnkit:1.10.9'
       dependency 'org.hamcrest:hamcrest-all:1.3'
@@ -334,7 +360,8 @@ subprojects {
       dependency('org.mockito:mockito-inline:4.10.0')
       dependency 'org.mybatis:mybatis:3.5.11'
       dependency 'org.nanohttpd:nanohttpd:2.3.1'
-      dependencySet(group: 'org.slf4j', version: '1.7.36') {
+//      dependencySet(group: 'org.slf4j', version: '1.7.36') {
+      dependencySet(group: 'org.slf4j', version: '2.0.16') {
         entry 'jcl-over-slf4j'
         entry 'jul-to-slf4j'
         entry 'log4j-over-slf4j'

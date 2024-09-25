@@ -19,17 +19,12 @@
  */
 package org.sonar.server.app;
 
-import javax.annotation.Nullable;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
 import org.sonar.process.Props;
 
 import static java.lang.String.format;
-import static org.sonar.process.ProcessProperties.Property.WEB_HOST;
-import static org.sonar.process.ProcessProperties.Property.WEB_HTTP_ACCEPT_COUNT;
-import static org.sonar.process.ProcessProperties.Property.WEB_HTTP_MAX_THREADS;
-import static org.sonar.process.ProcessProperties.Property.WEB_HTTP_MIN_THREADS;
-import static org.sonar.process.ProcessProperties.Property.WEB_HTTP_KEEP_ALIVE_TIMEOUT;
+import static org.sonar.process.ProcessProperties.Property.*;
 
 /**
  * Configuration of Tomcat connectors
@@ -64,7 +59,8 @@ class TomcatConnectors {
     connector.setProperty("relaxedQueryChars", "\"<>[\\]^`{|}");
     configurePool(props, connector);
     configureCompression(connector);
-    configureMaxHttpHeaderSize(connector);
+//    configureMaxHttpHeaderSize(connector);
+    connector.setProperty("maxHttpHeaderSize", String.valueOf(MAX_HTTP_HEADER_SIZE_BYTES));
     connector.setPort(port);
     connector.setMaxPostSize(MAX_POST_SIZE);
     return connector;
@@ -74,9 +70,9 @@ class TomcatConnectors {
    * HTTP header must be at least 48kb  to accommodate the authentication token used for
    * negotiate protocol of windows authentication.
    */
-  private static void configureMaxHttpHeaderSize(Connector connector) {
-    setConnectorAttribute(connector, "maxHttpHeaderSize", MAX_HTTP_HEADER_SIZE_BYTES);
-  }
+//  private static void configureMaxHttpHeaderSize(Connector connector) {
+//    setConnectorAttribute(connector, "maxHttpHeaderSize", MAX_HTTP_HEADER_SIZE_BYTES);
+//  }
 
   private static void configurePool(Props props, Connector connector) {
     connector.setProperty("acceptorThreadCount", String.valueOf(2));
@@ -92,9 +88,9 @@ class TomcatConnectors {
     connector.setProperty("compressibleMimeType", "text/html,text/xml,text/plain,text/css,application/json,application/javascript,text/javascript");
   }
 
-  private static void setConnectorAttribute(Connector c, String key, @Nullable Object value) {
-    if (value != null) {
-      c.setAttribute(key, value);
-    }
-  }
+//  private static void setConnectorAttribute(Connector c, String key, @Nullable Object value) {
+//    if (value != null) {
+//      c.setAttribute(key, value);
+//    }
+//  }
 }

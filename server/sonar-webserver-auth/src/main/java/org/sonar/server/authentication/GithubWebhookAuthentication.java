@@ -22,7 +22,7 @@ package org.sonar.server.authentication;
 import com.google.common.annotations.VisibleForTesting;
 import java.security.MessageDigest;
 import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.sonar.api.config.internal.Encryption;

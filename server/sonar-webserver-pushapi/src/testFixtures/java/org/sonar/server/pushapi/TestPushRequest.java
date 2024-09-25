@@ -40,7 +40,7 @@ package org.sonar.server.pushapi;/*
 import com.google.common.base.Throwables;
 import java.util.Map;
 import java.util.Optional;
-import javax.servlet.AsyncContext;
+import jakarta.servlet.AsyncContext;
 import org.sonar.server.ws.ServletRequest;
 import org.sonar.server.ws.TestRequest;
 import org.sonar.server.ws.TestResponse;

@@ -8,7 +8,8 @@ dependencies {
   // please keep the list grouped by configuration and ordered by name
 
   api 'com.google.guava:guava'
-  api 'com.github.everit-org.json-schema:org.everit.json.schema'
+  api 'com.github.erosb:everit-json-schema'
+//  api 'com.github.everit-org.json-schema:org.everit.json.schema'
 
   api 'io.prometheus:simpleclient_common'
   api 'io.prometheus:simpleclient_servlet'
@@ -28,7 +29,7 @@ dependencies {
   api project(':sonar-scanner-protocol')
 
   compileOnlyApi 'com.google.code.findbugs:jsr305'
-  compileOnlyApi 'javax.servlet:javax.servlet-api'
+  compileOnlyApi 'jakarta.servlet:jakarta.servlet-api'
 
   testImplementation 'org.apache.logging.log4j:log4j-api'
   testImplementation 'org.apache.logging.log4j:log4j-core'
@@ -36,7 +37,7 @@ dependencies {
   testImplementation 'com.google.code.findbugs:jsr305'
   testImplementation 'com.tngtech.java:junit-dataprovider'
   testImplementation 'com.squareup.okhttp3:mockwebserver'
-  testImplementation 'javax.servlet:javax.servlet-api'
+  testImplementation 'jakarta.servlet:jakarta.servlet-api'
   testImplementation 'org.mockito:mockito-core'
   testImplementation testFixtures(project(':server:sonar-server-common'))
   testImplementation testFixtures(project(':server:sonar-webserver-auth'))

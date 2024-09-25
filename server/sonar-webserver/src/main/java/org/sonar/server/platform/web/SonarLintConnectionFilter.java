@@ -22,10 +22,11 @@ package org.sonar.server.platform.web;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Optional;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.sonar.api.utils.System2;
 import org.sonar.api.web.ServletFilter;
 import org.sonar.db.DbClient;
@@ -55,7 +56,7 @@ public class SonarLintConnectionFilter extends ServletFilter {
   }
 
   @Override
-  public void doFilter(javax.servlet.ServletRequest servletRequest, javax.servlet.ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+  public void doFilter(jakarta.servlet.ServletRequest servletRequest, jakarta.servlet.ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     ServletRequest wsRequest = new ServletRequest(request);
 

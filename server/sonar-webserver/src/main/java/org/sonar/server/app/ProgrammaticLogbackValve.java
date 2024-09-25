@@ -24,6 +24,7 @@ import ch.qos.logback.core.util.ExecutorServiceUtil;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.LifecycleState;
 import org.apache.commons.lang.reflect.FieldUtils;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Implementation of {@link ch.qos.logback.access.tomcat.LogbackValve} that does not
@@ -42,5 +43,10 @@ public class ProgrammaticLogbackValve extends LogbackValve {
     } catch (IllegalAccessException e) {
       throw new IllegalStateException(e);
     }
+  }
+
+  @Override
+  public ExecutorService getAlternateExecutorService() {
+    return super.getAlternateExecutorService();
   }
 }

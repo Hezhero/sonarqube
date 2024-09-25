@@ -23,7 +23,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import javax.servlet.AsyncContext;
+import jakarta.servlet.AsyncContext;
 import org.sonar.server.pushapi.ServerPushClient;
 
 public class SonarLintClient extends ServerPushClient {

@@ -30,8 +30,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import static java.net.URLDecoder.decode;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -79,7 +81,7 @@ public class OAuth2AuthenticationParametersImpl implements OAuth2AuthenticationP
   }
 
   private static Optional<String> getParameter(HttpServletRequest request, String parameterKey) {
-    Optional<javax.servlet.http.Cookie> cookie = findCookie(AUTHENTICATION_COOKIE_NAME, request);
+    Optional<Cookie> cookie = findCookie(AUTHENTICATION_COOKIE_NAME, request);
     if (!cookie.isPresent()) {
       return empty();
     }

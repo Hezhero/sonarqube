@@ -23,13 +23,13 @@ import com.google.common.collect.ImmutableSet;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.EventListener;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import javax.servlet.SessionTrackingMode;
 import org.junit.Test;
 

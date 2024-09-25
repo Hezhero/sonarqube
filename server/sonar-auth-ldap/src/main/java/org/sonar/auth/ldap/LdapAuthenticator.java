@@ -20,7 +20,7 @@
 package org.sonar.auth.ldap;
 
 import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static java.util.Objects.requireNonNull;
 
